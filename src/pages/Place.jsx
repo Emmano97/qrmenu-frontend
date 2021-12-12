@@ -1,10 +1,19 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { IoMdArrowBack } from 'react-icons/io';
 import { AiOutlineDelete, AiOutlineQrcode } from 'react-icons/ai';
+import { RiFileList3Line } from 'react-icons/ri';
 import { Row, Col, Button, Modal } from 'react-bootstrap';
 import { UseParams, UseHistory } from 'react-router-dom';
 
-import { fetchPlace, removeCategory, removePlace, removeMenuItem } from '../apis';
+
+import { 
+    fetchPlace, 
+    removeCategory,
+    removePlace,
+    removeMenuItem,
+    updatePlace
+} from '../apis';
+
 import AuthContext from '../contexts/AuthContext';
 import MainLayout from '../layouts/MainLayout';
 import { useHistory, useParams } from 'react-router';
@@ -39,6 +48,11 @@ const Place = () => {
         if(json){
             setPlace(json);
         }
+    }
+
+    const onUpdatePlace = (tables) => {
+        updatePlace(place.id, { number_of_tables: tables }, auth.token)
+            .then((json) => {if(json) setPlace(place);})
     }
 
     const onRemovePlace = async () => {
@@ -79,7 +93,7 @@ const Place = () => {
 
     useEffect(() => {
         onFetchPlace();
-    }, []);
+    });
 
     return (
         <MainLayout>
@@ -101,6 +115,10 @@ const Place = () => {
                         </div>
                         <Button variant='link' onClick={showQRCodeModal}>
                             <AiOutlineQrcode size={25}  />
+                        </Button>
+
+                        <Button variant='link' href={`/places/${params.id}/orders`}>
+                            <RiFileList3Line size={25}  />
                         </Button>
                     </div>
                 </Col>
@@ -151,7 +169,13 @@ const Place = () => {
                 </Modal.Body>
             </Modal>
 
-            <QRCodeModal show={qrcode} onHide={hideQRCodeModal} place={place} centered />
+            <QRCodeModal 
+                show={qrcode} 
+                onHide={hideQRCodeModal} 
+                place={place} 
+                centered 
+                onUpdatePlace={onUpdatePlace}
+            />
 
         </MainLayout>
     )

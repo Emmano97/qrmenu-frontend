@@ -8,6 +8,8 @@ import Places from '../pages/Places';
 import Place from '../pages/Place';
 import Register from '../pages/Register';
 import PrivateRoute from './PrivateRoutes';
+import Menu from '../pages/Menu';
+import Orders from '../pages/Orders';
 
 
 function App(){
@@ -18,11 +20,18 @@ function App(){
                     <Route path="/" component={Home} exact/>
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
-                    <PrivateRoute path="/places" exact>
+                    <Route path="/register" component={Register} />
+                    <Route path="/menu/:id/:table" exact>
+                        <Menu />
+                    </Route>
+                    <PrivateRoute exact path="/places/:id">
+                        <Place />
+                    </PrivateRoute>
+                    <PrivateRoute exact path="/places">
                         <Places />
                     </PrivateRoute>
-                    <PrivateRoute path="/places/:id" exact>
-                        <Place />
+                    <PrivateRoute exact path="/places/:id/orders">
+                        <Orders />
                     </PrivateRoute>
                 </Switch>
             </Router>

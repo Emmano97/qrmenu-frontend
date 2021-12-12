@@ -37,7 +37,7 @@ const Places = () => {
 
     useEffect(() => {
         onFetchPlaces();
-    }, [])
+    })
 
     return (
         <MainLayout> 

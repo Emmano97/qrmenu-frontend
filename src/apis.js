@@ -97,3 +97,19 @@ export function removeCategory(id, token){
 export function removeMenuItem(id, token){
     return request(`/api/categories/${id}/`, { token, method: "DELETE" });
 }
+
+export function updatePlace(id, data, token){
+    return request(`/api/places/${id}/`, {data, token, method: "PATCH" });
+}
+
+export function createPaymentIntent(data, token){
+    return request(`/api/create_payment_intent/`, {data, token, method: "POST" });
+}
+
+export function fetchOrders(placeId, token){
+    return request(`/api/orders/?place=${placeId}`, { token });
+}
+
+export function completeOrder(orderId, data, token){
+    return request(`/api/orders/${orderId}`, { data, token, method:"PATCH" });
+}

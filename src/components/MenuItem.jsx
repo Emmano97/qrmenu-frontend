@@ -5,7 +5,7 @@ import {BiEdit} from 'react-icons/bi';
 import {AiOutlineDelete} from 'react-icons/ai';
 
 
-const MenuItem = ({ item, onEdit, onRemove }) => (
+const MenuItem = ({ item, onEdit, onRemove, onOrder, font, color }) => (
     <StyledContainer active={item.is_available}>
         <Col xs={5} style={{ backgroundImage: `url(${item.image})` }} />
         <Col xs={7} className="d-flex flex-column justify-content-between w-200">
@@ -33,8 +33,14 @@ const MenuItem = ({ item, onEdit, onRemove }) => (
             <div className="d-flex justify-content-between align-items-end">
                 <div>
                     <h5 className='mb-0 text-standard'>
-                        <b>${item.price}</b>
+                        <b style={{color: color}}>${item.price}</b>
                     </h5>
+                    {onOrder ? (
+                        <Button variant="std" style={{backgroundColor: color}}  className="mt-2" size="sm" onClick={() => onOrder(item)}>
+                            {!item.quantity? "Add to cart": `Add one more (${item.quantity})`}
+                        </Button>
+
+                    ): null }
                 </div>
                 {!item.is_available ? (<small className="text-secondary">Not Available</small>) : null}
             </div>
